@@ -48,13 +48,10 @@ hr {
     margin: 2pt 0 3pt 0;
 }
 
-/* Override pandoc's flex-based .columns with CSS multi-column layout */
+/* One column per page: override pandoc's flex layout with plain block */
 div.columns {
     display: block !important;
-    columns: 2 !important;
-    column-count: 2 !important;
-    column-gap: 0.7cm !important;
-    column-fill: auto !important;
+    column-count: 1 !important;
 }
 
 p {
