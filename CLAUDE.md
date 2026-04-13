@@ -41,6 +41,8 @@ For each group of 4 units, search the following sources:
 
 Cross-reference at least **two** sources before including a knowledge point. Prefer points that appear in both the textbook unit and on 中考网/新东方.
 
+You can also search for the 中考 real examination paper in past three years. Make sure your question is similar to the real examination paper.
+
 ### Step 3 — Verify individual words
 
 Before using a word as a test item, confirm it is in the **人教版八年级** textbook word list for those units. Do not test words that only appear incidentally or in footnotes.
