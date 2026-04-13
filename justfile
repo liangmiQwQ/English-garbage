@@ -21,12 +21,12 @@ all: dist term1 term2
 term1: dist
     pandoc papers/term1_questions.md \
         {{PANDOC_FLAGS}} \
-        --css=papers/style.css \
+        --css=styles/style.css \
         --pdf-engine=weasyprint \
         -o dist/term1_questions.pdf
     pandoc papers/answers/term1_answers.md \
         {{PANDOC_FLAGS}} \
-        --css=papers/style-answers.css \
+        --css=styles/style-answers.css \
         --pdf-engine=weasyprint \
         -o dist/term1_answers.pdf
     @echo "Term 1 done."
@@ -35,12 +35,12 @@ term1: dist
 term2: dist
     pandoc papers/term2_questions.md \
         {{PANDOC_FLAGS}} \
-        --css=papers/style.css \
+        --css=styles/style.css \
         --pdf-engine=weasyprint \
         -o dist/term2_questions.pdf
     pandoc papers/answers/term2_answers.md \
         {{PANDOC_FLAGS}} \
-        --css=papers/style-answers.css \
+        --css=styles/style-answers.css \
         --pdf-engine=weasyprint \
         -o dist/term2_answers.pdf
     @echo "Term 2 done."
