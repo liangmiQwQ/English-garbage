@@ -1,56 +1,42 @@
 # English Exam Paper Builder
 #
 # Requirements (weasyprint, default):
-#   brew install pandoc
+#   brew install pandoc just
 #   pip install weasyprint
-#
-# Optional (xelatex, for LaTeX workflow):
-#   brew install --cask mactex-no-gui
-#   sudo tlmgr install xecjk collection-fontsrecommended enumitem
 
 PANDOC_FLAGS := "--standalone -f markdown+fenced_divs+raw_html"
 
 # Default: build all PDFs
 default: all
 
-# Build all PDFs
-all: dist term1 term2
-    @echo "Done! PDFs are in ./dist/"
-
-# Convert Term 1 papers
-term1: dist
-    pandoc papers/term1_questions.md \
-        {{PANDOC_FLAGS}} \
-        --css=styles/style.css \
-        --pdf-engine=weasyprint \
-        -o dist/term1_questions.pdf
-    pandoc papers/answers/term1_answers.md \
-        {{PANDOC_FLAGS}} \
-        --css=styles/style-answers.css \
-        --pdf-engine=weasyprint \
-        -o dist/term1_answers.pdf
-    @echo "Term 1 done."
-
-# Convert Term 2 papers
-term2: dist
-    pandoc papers/term2_questions.md \
-        {{PANDOC_FLAGS}} \
-        --css=styles/style.css \
-        --pdf-engine=weasyprint \
-        -o dist/term2_questions.pdf
-    pandoc papers/answers/term2_answers.md \
-        {{PANDOC_FLAGS}} \
-        --css=styles/style-answers.css \
-        --pdf-engine=weasyprint \
-        -o dist/term2_answers.pdf
-    @echo "Term 2 done."
-
-# Alternative: build using xelatex (requires MacTeX/BasicTeX)
-# Each .md file must use LaTeX raw blocks for this to work.
-# Kept here for reference if migrating to a LaTeX workflow.
-# all-latex: dist
-#     pandoc papers/term1_questions.md --pdf-engine=xelatex -o dist/term1_questions.pdf
-#     pandoc papers/term2_questions.md --pdf-engine=xelatex -o dist/term2_questions.pdf
+# Build all PDFs — auto-detects every papers/paper*_questions.md file
+all: dist
+    #!/usr/bin/env bash
+    set -euo pipefail
+    shopt -s nullglob
+    files=(papers/paper*_questions.md)
+    if [[ ${#files[@]} -eq 0 ]]; then
+        echo "No paper*_questions.md files found in papers/." >&2
+        exit 1
+    fi
+    for qfile in "${files[@]}"; do
+        base=$(basename "$qfile" _questions.md)   # e.g. paper1
+        n=${base#paper}                            # e.g. 1
+        afile="papers/answers/${base}_answers.md"
+        echo "Building paper ${n}..."
+        pandoc "$qfile" \
+            {{PANDOC_FLAGS}} \
+            --css=styles/style.css \
+            --pdf-engine=weasyprint \
+            -o "dist/${base}_questions.pdf"
+        pandoc "$afile" \
+            {{PANDOC_FLAGS}} \
+            --css=styles/style-answers.css \
+            --pdf-engine=weasyprint \
+            -o "dist/${base}_answers.pdf"
+        echo "  Paper ${n} done."
+    done
+    echo "All done! PDFs are in ./dist/"
 
 # Create output directory
 dist:
@@ -63,7 +49,8 @@ clean:
 
 # Build and open all PDFs (macOS)
 open: all
-    open dist/term1_questions.pdf
-    open dist/term2_questions.pdf
-    open dist/term1_answers.pdf
-    open dist/term2_answers.pdf
+    #!/usr/bin/env bash
+    shopt -s nullglob
+    for pdf in dist/paper*_questions.pdf dist/paper*_answers.pdf; do
+        open "$pdf"
+    done
