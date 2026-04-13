@@ -1,0 +1,85 @@
+@page {
+    size: A4;
+    margin: 1.5cm 1.8cm;
+}
+
+body {
+    font-family: "PingFang SC", "Noto Sans CJK SC", "Source Han Sans", "Times New Roman", serif;
+    font-size: 9.5pt;
+    line-height: 1.25;
+    color: #000;
+}
+
+.exam-header {
+    text-align: center;
+    margin-bottom: 6pt;
+}
+
+.exam-title {
+    font-size: 14pt;
+    font-weight: bold;
+    margin-bottom: 3pt;
+}
+
+.exam-subtitle {
+    font-size: 10pt;
+    margin-bottom: 4pt;
+}
+
+.exam-info {
+    font-size: 9pt;
+}
+
+.fill-line {
+    display: inline-block;
+    min-width: 3.5cm;
+    border-bottom: 1px solid #000;
+}
+
+.fill-line-short {
+    display: inline-block;
+    min-width: 2cm;
+    border-bottom: 1px solid #000;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #000;
+    margin: 2pt 0 3pt 0;
+}
+
+/* Override pandoc's flex-based .columns with CSS multi-column layout */
+div.columns {
+    display: block !important;
+    columns: 2 !important;
+    column-count: 2 !important;
+    column-gap: 0.7cm !important;
+    column-fill: auto !important;
+}
+
+p {
+    margin: 2pt 0;
+}
+
+strong {
+    font-size: 9.5pt;
+}
+
+ol {
+    margin: 2pt 0 4pt 0;
+    padding-left: 1.8em;
+    list-style-type: decimal;
+}
+
+li {
+    margin-bottom: 1pt;
+    padding: 0;
+    break-inside: avoid;
+}
+
+.section-title {
+    font-weight: bold;
+    font-size: 10pt;
+    margin: 5pt 0 2pt 0;
+    break-after: avoid;
+}
